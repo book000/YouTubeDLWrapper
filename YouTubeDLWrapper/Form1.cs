@@ -147,8 +147,8 @@ namespace YouTubeDLWrapper
                 }
                 else
                 {
-                    addLogBox("Error...");
-                    data.Cells[3].Value = "エラー";
+                    addLogBox("Error... (" + p.ExitCode + ")");
+                    data.Cells[3].Value = "エラー (" + p.ExitCode + ")";
                     error++;
                 }
                 progressBar1.Value++;
@@ -178,6 +178,27 @@ namespace YouTubeDLWrapper
                 ? string.Empty
                 : HttpUtility.ParseQueryString(iqs < args.Length - 1
                     ? args.Substring(iqs + 1) : string.Empty)[key];
+        }
+
+        private void Button4_Click(object sender, EventArgs e)
+        {
+            // YouTube DL Updater
+
+            addLogBox("YouTubeDL Update Start...");
+            Process p = Process.Start(
+                "youtube-dl.exe",
+                "-U");
+
+            p.WaitForExit();
+            if (p.ExitCode == 0)
+            {
+                addLogBox("Success!");
+            }
+            else
+            {
+                addLogBox("Error... (" + p.ExitCode + ")");
+            }
+            addLogBox("YouTubeDL Update End.");
         }
     }
 }
