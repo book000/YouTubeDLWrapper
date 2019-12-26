@@ -49,6 +49,28 @@ namespace YouTubeDLWrapper
         {
             string url = textBox2.Text;
             addLogBox("Add Process Start: " + url);
+
+            string vid = getID(url);
+            if (vid == null)
+            {
+                addLogBox("get vid error [debug: 1]");
+                MessageBox.Show("動画IDをURLから取得できませんでした。",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return;
+            }
+            string title = getTitle(url);
+            if (title == null)
+            {
+                addLogBox("get title error [debug: 1]");
+                MessageBox.Show("動画タイトルをURLから取得できませんでした。",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return;
+            }
+            /*
             string pattern = "[/?=]?([-\\w]{11})";
             Match match = Regex.Match(url, pattern);
             if (!match.Success)
@@ -72,6 +94,8 @@ namespace YouTubeDLWrapper
             }
             string vid = match.Groups[1].Value;
             addLogBox("VID: " + vid);
+            */
+            /*
             string res = null;
             try
             {
@@ -98,12 +122,11 @@ namespace YouTubeDLWrapper
             }
             string author = GetArgs(res, "author", '&');
             addLogBox("MovAuthor: " + author);
-
+            */
             foreach (DataGridViewRow data in dataGridView1.Rows.Cast<DataGridViewRow>())
             {
                 if(vid.Equals(data.Cells[2].Value.ToString()))
                 {
-                    addLogBox("MovAuthor: " + author);
                     MessageBox.Show("指定された動画はすでにキューに登録されています。",
                     "Error",
                     MessageBoxButtons.OK,
@@ -112,8 +135,58 @@ namespace YouTubeDLWrapper
                 }
             }
 
-            dataGridView1.Rows.Add(title, author, vid, "待機中");
+            dataGridView1.Rows.Add(title, vid, url, "待機中");
             addLogBox("VID: " + vid + " Added!");
+        }
+
+        private string getID(string url)
+        {
+            Process p = new Process();
+            p.StartInfo.FileName = "youtube-dl.exe";
+            p.StartInfo.Arguments = "--get-id " + url;
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.RedirectStandardOutput = true;
+            p.StartInfo.RedirectStandardInput = false;
+            p.StartInfo.CreateNoWindow = true;
+
+            p.Start();
+            string result = p.StandardOutput.ReadLine();
+            p.WaitForExit(60000);
+            if (p.ExitCode == 0)
+            {
+                p.Close();
+                return result;
+            }
+            else
+            {
+                p.Close();
+                return null;
+            }
+        }
+
+        private string getTitle(string url)
+        {
+            Process p = new Process();
+            p.StartInfo.FileName = "youtube-dl.exe";
+            p.StartInfo.Arguments = "-e " + url;
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.RedirectStandardOutput = true;
+            p.StartInfo.RedirectStandardInput = false;
+            p.StartInfo.CreateNoWindow = true;
+
+            p.Start();
+            string result = p.StandardOutput.ReadLine();
+            p.WaitForExit(60000);
+            if (p.ExitCode == 0)
+            {
+                p.Close();
+                return result;
+            }
+            else
+            {
+                p.Close();
+                return null;
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -131,11 +204,12 @@ namespace YouTubeDLWrapper
 
             foreach (DataGridViewRow data in dataGridView1.Rows.Cast<DataGridViewRow>())
             {
-                string vid = data.Cells[2].Value.ToString();
-                addLogBox("DL " + vid + " Start...");
+                string vid = data.Cells[1].Value.ToString();
+                string url = data.Cells[2].Value.ToString();
+                addLogBox("DL " + vid + " Start... (" + url + ")");
                 Process p = Process.Start(
                     "youtube-dl.exe",
-                    "-c --ignore-config https://www.youtube.com/watch?v=" + vid +
+                    "-c --ignore-config " + url +
                     " -o output\\%(title)s.%(ext)s");
 
                 p.WaitForExit();
@@ -169,17 +243,6 @@ namespace YouTubeDLWrapper
             dataGridView1.Rows.Clear();
             addLogBox("Cleared List");
         }
-
-        // https://stackoverflow.com/questions/22108268/how-to-get-youtube-video-title-using-url
-        private static string GetArgs(string args, string key, char query)
-        {
-            var iqs = args.IndexOf(query);
-            return iqs == -1
-                ? string.Empty
-                : HttpUtility.ParseQueryString(iqs < args.Length - 1
-                    ? args.Substring(iqs + 1) : string.Empty)[key];
-        }
-
         private void Button4_Click(object sender, EventArgs e)
         {
             // YouTube DL Updater
