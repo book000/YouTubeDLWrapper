@@ -118,81 +118,81 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ALREADY_ADDED_QUEUE" xml:space="preserve">
-    <value>The specified video is already in the queue.</value>
+    <value>指定された動画は既にキューに追加されています。</value>
   </data>
   <data name="CLIPBOARD_NOTEXT" xml:space="preserve">
-    <value>There is no text on the Clipboard.</value>
-  </data>
-  <data name="COMPLETED_DL" xml:space="preserve">
-    <value>Download of {0} has been completed.</value>
+    <value>クリップボードにテキストがありません。</value>
   </data>
   <data name="COULD_NOT_GET_VIDEOID" xml:space="preserve">
-    <value>Could not get video ID.</value>
+    <value>動画IDを取得できませんでした。</value>
   </data>
   <data name="COULD_NOT_GET_VIDEOTITLE" xml:space="preserve">
-    <value>Could not get video title.</value>
+    <value>動画タイトルを取得できませんでした。</value>
   </data>
   <data name="DL_PROCESS_FINISHED" xml:space="preserve">
-    <value>Download processing has been finished.</value>
+    <value>ダウンロード処理が完了しました。</value>
   </data>
   <data name="ERROR" xml:space="preserve">
-    <value>Error</value>
+    <value>エラー</value>
   </data>
   <data name="FAILED" xml:space="preserve">
-    <value>Failed</value>
+    <value>失敗</value>
   </data>
   <data name="FAILED_UPDATE_YOUTUBEDL" xml:space="preserve">
-    <value>YouTubeDL update failed.</value>
+    <value>YouTubeDLのアップデートに失敗しました。</value>
   </data>
   <data name="FINISHED_ADD_PROCESS" xml:space="preserve">
-    <value>Finished Add Process</value>
+    <value>追加プロセスを完了</value>
+  </data>
+  <data name="FINISHED_DL" xml:space="preserve">
+    <value>{0} のダウンロードを完了しました。</value>
   </data>
   <data name="FINISHED_DL_PROCESS" xml:space="preserve">
-    <value>Finished DL Process</value>
+    <value>ダウンロードプロセスを完了</value>
   </data>
   <data name="INFO" xml:space="preserve">
-    <value>Infomation</value>
+    <value>インフォメーション</value>
   </data>
   <data name="NOTFOUND_YOUTUBEDL" xml:space="preserve">
-    <value>Please place youtube-dl.exe in the same directory.</value>
+    <value>同じディレクトリに youtube-dl.exe を配置してください。</value>
   </data>
   <data name="NUMBER_OF_FILES" xml:space="preserve">
-    <value>{0:d} File(s)</value>
+    <value>{0:d} ファイル</value>
   </data>
   <data name="ParseClipBoard" xml:space="preserve">
-    <value>Parse the clipboard.</value>
+    <value>クリップボードを解析します。</value>
   </data>
   <data name="QUEUE_CLEARED" xml:space="preserve">
-    <value>The queue has been cleared.</value>
+    <value>キューをクリアしました。</value>
   </data>
   <data name="START_ADD_PROCESS" xml:space="preserve">
-    <value>Start Add Process</value>
+    <value>追加プロセスを開始</value>
   </data>
   <data name="START_DL" xml:space="preserve">
-    <value>Start downloading {0}.</value>
+    <value>{0} のダウンロードを開始します。</value>
   </data>
   <data name="START_DL_PROCESS" xml:space="preserve">
-    <value>Start DL Process</value>
+    <value>ダウンロードプロセスを開始</value>
   </data>
   <data name="START_UPDATE_YOUTUBEDL" xml:space="preserve">
-    <value>Start updating YouTubeDL.</value>
+    <value>YouTubeDLのアップデートを開始します。</value>
   </data>
   <data name="SUCCESS" xml:space="preserve">
-    <value>Success</value>
+    <value>成功</value>
   </data>
   <data name="SUCCESSFUL_UPDATE_YOUTUBEDL" xml:space="preserve">
-    <value>YouTubeDL update was successful.</value>
+    <value>YouTubeDLのアップデートが成功しました。</value>
   </data>
   <data name="URL_PARSED" xml:space="preserve">
-    <value>{0:d} URL parsed.</value>
+    <value>{0:d} 個のURLをパースしました。</value>
   </data>
   <data name="URL_PARSED_AND_ADDED" xml:space="preserve">
-    <value>{0:d} URL parsed and added successfully.</value>
+    <value>{0:d} 個のURLをパースし、追加に成功しました。</value>
   </data>
   <data name="URL_PARSED_AND_ADDERR" xml:space="preserve">
-    <value>{0:d} URL parsed but added failed.</value>
+    <value>{0:d} 個のURLをパースしましたが、追加に失敗しました。</value>
   </data>
   <data name="WAITING" xml:space="preserve">
-    <value>Waiting</value>
+    <value>待機中</value>
   </data>
 </root>

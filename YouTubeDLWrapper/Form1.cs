@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Forms;
+using YouTubeDLWrapper.Properties;
 
 namespace YouTubeDLWrapper
 {
@@ -25,119 +26,163 @@ namespace YouTubeDLWrapper
         private void Form1_Load(object sender, EventArgs e)
         {
             addLogBox("Application Start");
-            
+
             if (!File.Exists("youtube-dl.exe"))
             {
-                MessageBox.Show("同じディレクトリ内にyoutube-dl.exeを配置してください。",
-                    "Error",
+                MessageBox.Show(Resources.NOTFOUND_YOUTUBEDL,
+                    Resources.ERROR,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 Application.Exit();
+                return;
             }
             if (!Directory.Exists("output"))
             {
                 Directory.CreateDirectory("output");
             }
         }
+
+        delegate void Delegate(string text);
         void addLogBox(string text)
         {
             string date = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
             textBox1.Text = textBox1.Text + "[" + date + "] " + text + Environment.NewLine;
+
+            textBox1.SelectionStart = textBox1.Text.Length - Environment.NewLine.Length;
+            textBox1.ScrollToCaret();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             string url = textBox2.Text;
-            addLogBox("Add Process Start: " + url);
+
+            await Task.Run(() => Add(url));
+        }
+
+        private async void parseCPButton_Click(object sender, EventArgs e)
+        {
+            parseCPButton.Enabled = false;
+            addLogBox(Resources.ParseClipBoard);
+            if (!Clipboard.ContainsText())
+            {
+                MessageBox.Show(Resources.INFO,
+                    Resources.ERROR,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                parseCPButton.Enabled = true;
+                return;
+            }
+            string urls_str = Clipboard.GetText();
+            if (!urls_str.Contains('\n'))
+            {
+                if (await Task.Run(() => Add(urls_str.Trim(), false)))
+                {
+                    MessageBox.Show(string.Format(Resources.URL_PARSED_AND_ADDED, 1),
+                        Resources.INFO,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show(string.Format(Resources.URL_PARSED_AND_ADDERR, 1),
+                        Resources.INFO,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
+                parseCPButton.Enabled = true;
+                return;
+            }
+            string[] urls = urls_str.Split('\n');
+            int success = 0;
+            int failed = 0;
+            foreach (string url in urls)
+            {
+                if(url.Trim().Length == 0)
+                {
+                    continue;
+                }
+                if(await Task.Run(() => Add(url, false)))
+                {
+                    success++;
+                }
+                else
+                {
+                    failed++;
+                }
+            }
+
+            MessageBox.Show(string.Format(Resources.URL_PARSED, 1) + Environment.NewLine + Resources.SUCCESS + ": " + success + Environment.NewLine + Resources.FAILED + ": " + failed,
+                Resources.INFO,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+                parseCPButton.Enabled = true;
+        }
+
+        private bool Add(string url)
+        {
+            return Add(url, true);
+        }
+        private bool Add(string url, bool popup)
+        {
+            Invoke(new Delegate(addLogBox), Resources.START_ADD_PROCESS + ": " + url);
 
             string vid = getID(url);
             if (vid == null)
             {
-                addLogBox("get vid error [debug: 1]");
-                MessageBox.Show("動画IDをURLから取得できませんでした。",
-                    "Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                return;
+                Invoke(new Delegate(addLogBox), Resources.COULD_NOT_GET_VIDEOID + " (" + url + ")");
+                if (popup)
+                {
+                    MessageBox.Show(Resources.COULD_NOT_GET_VIDEOID,
+                        Resources.ERROR,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
+                return false;
             }
+            Invoke(new Delegate(addLogBox), "VID: " + vid);
+
             string title = getTitle(url);
             if (title == null)
             {
-                addLogBox("get title error [debug: 1]");
-                MessageBox.Show("動画タイトルをURLから取得できませんでした。",
-                    "Error",
+                Invoke(new Delegate(addLogBox), Resources.COULD_NOT_GET_VIDEOTITLE + " (" + vid + ")");
+                if (popup)
+                {
+                    MessageBox.Show(Resources.COULD_NOT_GET_VIDEOTITLE,
+                    Resources.ERROR,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-                return;
+                }
+                return false;
             }
-            /*
-            string pattern = "[/?=]?([-\\w]{11})";
-            Match match = Regex.Match(url, pattern);
-            if (!match.Success)
-            {
-                addLogBox("Pattern mismatch [debug: 1]");
-                MessageBox.Show("YouTubeのIDをURLから取得できませんでした。(1)",
-                    "Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                return;
-            }
+            Invoke(new Delegate(addLogBox), "Title: " + title);
 
-            if (!match.Groups[1].Success)
-            {
-                addLogBox("Pattern mismatch [debug: 2]");
-                MessageBox.Show("YouTubeのIDをURLから取得できませんでした。(2)",
-                    "Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                return;
-            }
-            string vid = match.Groups[1].Value;
-            addLogBox("VID: " + vid);
-            */
-            /*
-            string res = null;
-            try
-            {
-                res = new WebClient().DownloadString("http://youtube.com/get_video_info?video_id=" + vid);
-            }catch(WebException ex)
-            {
-                addLogBox("YouTubeAPI Response: " + ex.Message);
-                MessageBox.Show("指定されたYouTubeURLの動画情報を取得できませんでした。(1)" + Environment.NewLine +
-                    ex.Message,
-                    "Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                return;
-            }
-            string title = GetArgs(res, "title", '&');
-            addLogBox("MovTitle: " + title);
-            if (title.Equals(string.Empty))
-            {
-                MessageBox.Show("指定されたYouTubeURLの動画情報を取得できませんでした。(2)",
-                    "Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                return;
-            }
-            string author = GetArgs(res, "author", '&');
-            addLogBox("MovAuthor: " + author);
-            */
             foreach (DataGridViewRow data in dataGridView1.Rows.Cast<DataGridViewRow>())
             {
-                if(vid.Equals(data.Cells[2].Value.ToString()))
+                if (vid.Equals(data.Cells[2].Value.ToString()))
                 {
-                    MessageBox.Show("指定された動画はすでにキューに登録されています。",
-                    "Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                    return;
+                    Invoke(new Delegate(addLogBox), Resources.ALREADY_ADDED_QUEUE + " (" + vid + ")");
+                    if (popup)
+                    {
+                        MessageBox.Show(Resources.ALREADY_ADDED_QUEUE,
+                        Resources.ERROR,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    }
+                    return false;
                 }
             }
 
-            dataGridView1.Rows.Add(title, vid, url, "待機中");
-            addLogBox("VID: " + vid + " Added!");
+            Invoke(new Delegate(addLogBox), Resources.FINISHED_ADD_PROCESS + ": " + url);
+            Invoke(new DelegateRowsAdd(RowsAdd), title, vid, url, Resources.WAITING);
+            return true;
         }
+
+        delegate void DelegateRowsAdd(string title, string vid, string url, string status);
+        void RowsAdd(string title, string vid, string url, string status)
+        {
+            dataGridView1.Rows.Add(title, vid, url, status);
+        }
+
 
         private string getID(string url)
         {
@@ -192,9 +237,9 @@ namespace YouTubeDLWrapper
         private void button2_Click(object sender, EventArgs e)
         {
             button2.Enabled = false;
-            addLogBox("DL Process Start");
+            addLogBox(Resources.START_DL_PROCESS);
 
-            addLogBox("Files Count: " + dataGridView1.Rows.Count);
+            addLogBox(string.Format(Resources.NUMBER_OF_FILES, dataGridView1.Rows.Count));
 
             int success = 0;
             int error = 0;
@@ -206,7 +251,7 @@ namespace YouTubeDLWrapper
             {
                 string vid = data.Cells[1].Value.ToString();
                 string url = data.Cells[2].Value.ToString();
-                addLogBox("DL " + vid + " Start... (" + url + ")");
+                addLogBox(string.Format(Resources.START_DL, vid) + " (" + url + ")");
                 Process p = Process.Start(
                     "youtube-dl.exe",
                     "-c --ignore-config " + url +
@@ -215,39 +260,39 @@ namespace YouTubeDLWrapper
                 p.WaitForExit();
                 if (p.ExitCode == 0)
                 {
-                    addLogBox("Success!");
-                    data.Cells[3].Value = "成功";
+                    addLogBox(Resources.SUCCESS);
+                    data.Cells[3].Value = Resources.SUCCESS;
                     success++;
                 }
                 else
                 {
-                    addLogBox("Error... (" + p.ExitCode + ")");
-                    data.Cells[3].Value = "エラー (" + p.ExitCode + ")";
+                    addLogBox(Resources.ERROR + " (" + p.ExitCode + ")");
+                    data.Cells[3].Value = Resources.SUCCESS + " (" + p.ExitCode + ")";
                     error++;
                 }
                 progressBar1.Value++;
-                
-                addLogBox("DL " + vid + " End...");
+
+                addLogBox(string.Format(Resources.COMPLETED_DL, vid));
             }
-            MessageBox.Show("処理終了" + Environment.NewLine + "成功数: " + success + Environment.NewLine + "失敗数: " + error,
-                    "Result",
+            MessageBox.Show(Resources.DL_PROCESS_FINISHED + Environment.NewLine + Resources.SUCCESS + ": " + success + Environment.NewLine + Resources.FAILED + ": " + error,
+                    Resources.INFO,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
-            addLogBox("成功数: " + success);
-            addLogBox("失敗数: " + error);
+            addLogBox(Resources.SUCCESS + ": " + success);
+            addLogBox(Resources.FAILED + ": " + error);
             button2.Enabled = true;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             dataGridView1.Rows.Clear();
-            addLogBox("Cleared List");
+            addLogBox(Resources.QUEUE_CLEARED);
         }
         private void Button4_Click(object sender, EventArgs e)
         {
             // YouTube DL Updater
 
-            addLogBox("YouTubeDL Update Start...");
+            addLogBox(Resources.START_UPDATE_YOUTUBEDL);
             Process p = Process.Start(
                 "youtube-dl.exe",
                 "-U");
@@ -255,13 +300,12 @@ namespace YouTubeDLWrapper
             p.WaitForExit();
             if (p.ExitCode == 0)
             {
-                addLogBox("Success!");
+                addLogBox(Resources.SUCCESSFUL_UPDATE_YOUTUBEDL);
             }
             else
             {
-                addLogBox("Error... (" + p.ExitCode + ")");
+                addLogBox(Resources.FAILED_UPDATE_YOUTUBEDL + " (" + p.ExitCode + ")");
             }
-            addLogBox("YouTubeDL Update End.");
         }
     }
 }

@@ -19,7 +19,7 @@ namespace YouTubeDLWrapper.Properties {
     // または Visual Studio のようなツールを使用して自動生成されました。
     // メンバーを追加または削除するには、.ResX ファイルを編集して、/str オプションと共に
     // ResGen を実行し直すか、または VS プロジェクトをビルドし直します。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -57,6 +57,240 @@ namespace YouTubeDLWrapper.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   The specified video is already in the queue. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ALREADY_ADDED_QUEUE {
+            get {
+                return ResourceManager.GetString("ALREADY_ADDED_QUEUE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   There is no text on the Clipboard. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string CLIPBOARD_NOTEXT {
+            get {
+                return ResourceManager.GetString("CLIPBOARD_NOTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Download of {0} has been completed. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string COMPLETED_DL {
+            get {
+                return ResourceManager.GetString("COMPLETED_DL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Could not get video ID. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string COULD_NOT_GET_VIDEOID {
+            get {
+                return ResourceManager.GetString("COULD_NOT_GET_VIDEOID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Could not get video title. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string COULD_NOT_GET_VIDEOTITLE {
+            get {
+                return ResourceManager.GetString("COULD_NOT_GET_VIDEOTITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Download processing has been finished. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DL_PROCESS_FINISHED {
+            get {
+                return ResourceManager.GetString("DL_PROCESS_FINISHED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Error に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ERROR {
+            get {
+                return ResourceManager.GetString("ERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Failed に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string FAILED {
+            get {
+                return ResourceManager.GetString("FAILED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   YouTubeDL update failed. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string FAILED_UPDATE_YOUTUBEDL {
+            get {
+                return ResourceManager.GetString("FAILED_UPDATE_YOUTUBEDL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Finished Add Process に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string FINISHED_ADD_PROCESS {
+            get {
+                return ResourceManager.GetString("FINISHED_ADD_PROCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Finished DL Process に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string FINISHED_DL_PROCESS {
+            get {
+                return ResourceManager.GetString("FINISHED_DL_PROCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Infomation に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string INFO {
+            get {
+                return ResourceManager.GetString("INFO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Please place youtube-dl.exe in the same directory. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NOTFOUND_YOUTUBEDL {
+            get {
+                return ResourceManager.GetString("NOTFOUND_YOUTUBEDL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0:d} File(s) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NUMBER_OF_FILES {
+            get {
+                return ResourceManager.GetString("NUMBER_OF_FILES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Parse the clipboard. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ParseClipBoard {
+            get {
+                return ResourceManager.GetString("ParseClipBoard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The queue has been cleared. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string QUEUE_CLEARED {
+            get {
+                return ResourceManager.GetString("QUEUE_CLEARED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Start Add Process に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string START_ADD_PROCESS {
+            get {
+                return ResourceManager.GetString("START_ADD_PROCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Start downloading {0}. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string START_DL {
+            get {
+                return ResourceManager.GetString("START_DL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Start DL Process に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string START_DL_PROCESS {
+            get {
+                return ResourceManager.GetString("START_DL_PROCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Start updating YouTubeDL. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string START_UPDATE_YOUTUBEDL {
+            get {
+                return ResourceManager.GetString("START_UPDATE_YOUTUBEDL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Success に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SUCCESS {
+            get {
+                return ResourceManager.GetString("SUCCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   YouTubeDL update was successful. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SUCCESSFUL_UPDATE_YOUTUBEDL {
+            get {
+                return ResourceManager.GetString("SUCCESSFUL_UPDATE_YOUTUBEDL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0:d} URL parsed. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URL_PARSED {
+            get {
+                return ResourceManager.GetString("URL_PARSED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0:d} URL parsed and added successfully. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URL_PARSED_AND_ADDED {
+            get {
+                return ResourceManager.GetString("URL_PARSED_AND_ADDED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0:d} URL parsed but added failed. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URL_PARSED_AND_ADDERR {
+            get {
+                return ResourceManager.GetString("URL_PARSED_AND_ADDERR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Waiting に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string WAITING {
+            get {
+                return ResourceManager.GetString("WAITING", resourceCulture);
             }
         }
     }
