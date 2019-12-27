@@ -2,7 +2,7 @@ language: csharp
 notifications:
   webhooks: https://tomacheese.com/tomachi/travisci_notice_book000.php
 script:
-  - xbuild /p:Configuration=Debug YouTubeDLWrapper.sln
+  - msbuild /p:Configuration=Debug YouTubeDLWrapper.sln
 before_install:
   - sudo apt-get install nunit-console
 before_script:
