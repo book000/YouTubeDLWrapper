@@ -8,23 +8,23 @@
 [![GitHub Release Date](https://img.shields.io/github/release-date/book000/YouTubeDLWrapper.svg)](https://github.com/book000/YouTubeDLWrapper/releases)
 [![Twitter Follow](https://img.shields.io/twitter/follow/book000.svg?style=social)](https://twitter.com/book000)
 
-[日本語のREADMEはこちらから](https://github.com/book000/YouTubeDLWrapper/blob/master/README-ja.md)
+[Click here for English README](https://github.com/book000/YouTubeDLWrapper/blob/master/README.md)
 
-Download YouTube videos.  
-**Please use it at your own risk without violating the Copyright Law or the YouTube Terms of Use. The developer does not take any responsibility.**
+YouTubeの動画をダウンロードできます。
+**利用の際は著作権法やYouTubeの利用規約への違反等をせず、自己責任で御利用下さい。開発者は一切の責任を負いません。**
 
-## Download
+## ダウンロード
 
 [Releases](https://github.com/book000/YouTubeDLWrapper/releases)
 
-## Usage
+## 使い方
 
 [Wiki](https://github.com/book000/YouTubeDLWrapper/wiki)
 
-## License
+## ライセンス
 
-The license for this project is [MIT License](https://github.com/book000/YouTubeDLWrapper/blob/master/LICENSE).
+このプロジェクトには[MIT License](https://github.com/book000/YouTubeDLWrapper/blob/master/LICENSE)を適用します。
 
-## Disclaimer
+## 免責事項
 
-The author is not responsible for any problems caused by the user using this application.
+作者は、利用者が当アプリケーションを利用したことによる如何なる問題に対して責任を負いません。

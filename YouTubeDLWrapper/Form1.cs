@@ -111,7 +111,7 @@ namespace YouTubeDLWrapper
                 }
             }
 
-            MessageBox.Show(string.Format(Resources.URL_PARSED, 1) + Environment.NewLine + Resources.SUCCESS + ": " + success + Environment.NewLine + Resources.FAILED + ": " + failed,
+            MessageBox.Show(string.Format(Resources.URL_PARSED, success + failed) + Environment.NewLine + Resources.SUCCESS + ": " + success + Environment.NewLine + Resources.FAILED + ": " + failed,
                 Resources.INFO,
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
@@ -267,7 +267,7 @@ namespace YouTubeDLWrapper
                 else
                 {
                     addLogBox(Resources.ERROR + " (" + p.ExitCode + ")");
-                    data.Cells[3].Value = Resources.SUCCESS + " (" + p.ExitCode + ")";
+                    data.Cells[3].Value = Resources.ERROR + " (" + p.ExitCode + ")";
                     error++;
                 }
                 progressBar1.Value++;
