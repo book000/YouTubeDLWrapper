@@ -22,8 +22,8 @@ Download YouTube videos.
 
 ## Requirements
 
-- **Windows** Vista, 7, 8, 8.1, 10+
-- .NETFramework 4.6.1
+- **Windows** 7, 8, 8.1, 10
+- **.NETFramework 4.8**
 
 ## Download
 

@@ -20,6 +20,11 @@ YouTubeの動画をダウンロードできます。
 - キュー機能を使っていくつもの動画をダウンロードできます。
 - クリップボードを用いて複数のURLを一括で追加できます。
 
+## 前提条件
+
+- **Windows** 7, 8, 8.1, 10
+- **.NETFramework 4.8**
+
 ## ダウンロード
 
 [Releases](https://github.com/book000/YouTubeDLWrapper/releases)
