@@ -46,12 +46,18 @@ namespace YouTubeDLWrapper
         void addLogBox(string text)
         {
             string date = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
-            textBox1.Text = textBox1.Text + "[" + date + "] " + text + Environment.NewLine;
+            if (text.StartsWith(" | [download]"))
+            {
+                List<string> lines = new List<string>(textBox1.Lines);
+                lines.RemoveAt(lines.Count - 2);
+                textBox1.Text = String.Join("\r\n", lines);
+            }
+            textBox1.Text += "[" + date + "] " + text + Environment.NewLine;
 
             textBox1.SelectionStart = textBox1.Text.Length - Environment.NewLine.Length;
             textBox1.ScrollToCaret();
         }
-
+        
         private async void button1_Click(object sender, EventArgs e)
         {
             string url = textBox2.Text;
@@ -234,7 +240,7 @@ namespace YouTubeDLWrapper
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private async void button2_Click(object sender, EventArgs e)
         {
             button2.Enabled = false;
             addLogBox(Resources.START_DL_PROCESS);
@@ -252,24 +258,19 @@ namespace YouTubeDLWrapper
                 string vid = data.Cells[1].Value.ToString();
                 string url = data.Cells[2].Value.ToString();
                 addLogBox(string.Format(Resources.START_DL, vid) + " (" + url + ")");
-                Process p = Process.Start(
-                    "youtube-dl.exe",
-                    "-c --ignore-config " + url +
-                    " -o output\\%(title)s.%(ext)s");
 
-                p.WaitForExit();
-                if (p.ExitCode == 0)
+                int res = await Task.Run(() => Work(url));
+                if(res == 0)
                 {
-                    addLogBox(Resources.SUCCESS);
-                    data.Cells[3].Value = Resources.SUCCESS;
                     success++;
+                    data.Cells[3].Value = Resources.SUCCESS;
                 }
                 else
                 {
-                    addLogBox(Resources.ERROR + " (" + p.ExitCode + ")");
-                    data.Cells[3].Value = Resources.ERROR + " (" + p.ExitCode + ")";
                     error++;
+                    data.Cells[3].Value = Resources.ERROR + " (" + res + ")";
                 }
+
                 progressBar1.Value++;
 
                 addLogBox(string.Format(Resources.COMPLETED_DL, vid));
@@ -281,6 +282,45 @@ namespace YouTubeDLWrapper
             addLogBox(Resources.SUCCESS + ": " + success);
             addLogBox(Resources.FAILED + ": " + error);
             button2.Enabled = true;
+        }
+        int Work(string url)
+        {
+            Process p = new Process();
+            p.StartInfo.FileName = "youtube-dl.exe";
+            p.StartInfo.Arguments = "-c --ignore-config " + url + " -o output\\%(title)s.%(ext)s";
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.RedirectStandardOutput = true;
+            p.StartInfo.RedirectStandardError = true;
+            p.StartInfo.RedirectStandardInput = false;
+            p.StartInfo.CreateNoWindow = true;
+            p.OutputDataReceived += p_OutputDataReceived;
+            p.ErrorDataReceived += p_ErrorDataReceived;
+
+            p.Start();
+
+            p.BeginOutputReadLine();
+            p.BeginErrorReadLine();
+
+            p.WaitForExit();
+            if (p.ExitCode == 0)
+            {
+                Invoke(new Delegate(addLogBox), Resources.SUCCESS);
+                return 0;
+            }
+            else
+            {
+                Invoke(new Delegate(addLogBox), Resources.ERROR + " (" + p.ExitCode + ")");
+                return p.ExitCode;
+            }
+        }
+
+        void p_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            Invoke(new Delegate(addLogBox), " | " + e.Data);
+        }
+        void p_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            Invoke(new Delegate(addLogBox), " | " + e.Data);
         }
 
         private void button3_Click(object sender, EventArgs e)
