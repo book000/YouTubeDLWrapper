@@ -13,6 +13,13 @@
 YouTubeの動画をダウンロードできます。
 **利用の際は著作権法やYouTubeの利用規約への違反等をせず、自己責任で御利用下さい。開発者は一切の責任を負いません。**
 
+## 特徴
+
+- YouTubeのURLに限らず、[youtube-dl](https://github.com/ytdl-org/youtube-dl)でサポートするすべてのURLを使用できます。
+- ひとつのボタンのみで`youtube-dl`をアップデートできます。
+- キュー機能を使っていくつもの動画をダウンロードできます。
+- クリップボードを用いて複数のURLを一括で追加できます。
+
 ## ダウンロード
 
 [Releases](https://github.com/book000/YouTubeDLWrapper/releases)

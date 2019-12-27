@@ -13,6 +13,18 @@
 Download YouTube videos.  
 **Please use it at your own risk without violating the Copyright Law or the YouTube Terms of Use. The developer does not take any responsibility.**
 
+## Feature
+
+- You can use any URL supported by [youtube-dl](https://github.com/ytdl-org/youtube-dl), not limited to YouTube URLs.
+- You can update `youtube-dl` with just one button.
+- You can download any number of videos using the queue function.
+- Multiple URLs can be added at once using the clipboard.
+
+## Requirements
+
+- **Windows** Vista, 7, 8, 8.1, 10+
+- .NETFramework 4.6.1
+
 ## Download
 
 [Releases](https://github.com/book000/YouTubeDLWrapper/releases)
